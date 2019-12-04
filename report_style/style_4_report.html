@@ -1,0 +1,501 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>2019-12-04 11:54:26 report.html</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <style type="text/css" media="screen">
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+            text-align: left;
+        }
+    
+        body {
+            font-family: Microsoft YaHei, Tahoma, arial, helvetica, sans-serif;
+            padding: 20px;
+            font-size: 80%;
+        }
+
+        table {
+            font-size: 100%;
+        }
+
+        /* -- heading ---------------------------------------------------------------------- */
+        .heading {
+            margin-top: 0ex;
+            margin-bottom: 1ex;
+        }
+
+        .heading .description {
+            margin-top: 4ex;
+            margin-bottom: 6ex;
+        }
+
+        /* -- report ------------------------------------------------------------------------ */
+        #total_row {
+            font-weight: bold;
+        }
+
+        .passCase {
+            color: #5cb85c;
+        }
+
+        .failCase {
+            color: #f0ad4e;
+            font-weight: bold;
+        }
+
+        .errorCase {        
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .hiddenRow {
+            display: none;
+        }
+
+        .testcase {
+            margin-left: 2em;
+        }
+    </style>
+
+</head>
+<script language="javascript" type="text/javascript">
+    output_list = Array();
+
+
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0, 2) == 'pt') {
+                if (level == 1 || level == 4) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';                    
+                }
+            }
+            if (id.substr(0, 2) == 'ft') {
+                if (level == 2 || level == 4) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+            
+            if (id.substr(0, 2) == 'et') {
+                if (level == 3 || level == 4) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+
+        detail_class = document.getElementsByClassName('detail');
+        //console.log(detail_class.length)
+        if (level == 3) {
+            for (var i = 0; i < detail_class.length; i++) {
+                detail_class[i].innerHTML = "收起"
+            }
+        }
+        else {
+            for (var i = 0; i < detail_class.length; i++) {
+                detail_class[i].innerHTML = "详细"
+            }
+        }
+    }
+
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '_' + (i + 1);
+            console.log(tid0);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            if (!tr) {
+                tid = 'e' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById(tid).className = 'hiddenRow';
+                document.getElementById(cid).innerText = "详细"
+            }
+            else {
+                document.getElementById(tid).className = '';
+                document.getElementById(cid).innerText = "收起"
+            }
+        }
+    }
+
+    function html_escape(s) {
+        s = s.replace(/&/g, '&amp;');
+        s = s.replace(/</g, '&lt;');
+        s = s.replace(/>/g, '&gt;');
+        return s;
+    }
+</script>
+
+
+<body>
+
+<div class='heading'>
+    <h1 style="font-family: Microsoft YaHei">2019-12-04 11:54:26 report.html</h1>
+    <p class='attribute'><strong>开始时间 : </strong> 2019-12-04 11:54:26</p>
+    <p class='attribute'><strong>合计耗时 : </strong> 0:00:00.056641</p>
+    <p class='attribute'><strong>测试结果 : </strong> 共 14，通过 11，失败 1，错误 1，跳过 1，通过率= 78.57%</p>
+
+    <p class='description'></p>
+</div>
+
+
+<p id='show_detail_line'>
+    <a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 78.57% }</a>
+    <a class="btn btn-success" href='javascript:showCase(1)'>通过{ 11 }</a>
+    <a class="btn btn-warning" href='javascript:showCase(2)'>失败{ 1 }</a>
+    <a class="btn btn-danger" href='javascript:showCase(3)'>错误{ 1 }</a>
+    <a class="btn btn-info" href='javascript:showCase(4)'>所有{ 14 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+    <colgroup>
+        <col align='left'/>
+        <col align='right'/>
+        <col align='right'/>
+        <col align='right'/>
+        <col align='right'/>
+        <col align='right'/>
+        <col align='right'/>
+    </colgroup>
+    <tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+        <td>用例集/测试用例</td>
+        <td>总计</td>
+        <td>通过</td>
+        <td>失败</td>
+        <td>错误</td>
+        <td>跳过</td>
+        <td>详细</td>
+    </tr>
+
+ 
+    
+<tr class="failClass warning">
+        <td>DemoProduct1.Feature1.f1_aaa_demo_env_test.Test</td>
+        <td class="text-center">2</td>
+        <td class="text-center">2</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center"><a href="javascript:showClassDetail('c1',2)" class="detail" id="c1">详细</a></td>
+    </tr>
+
+<tr id="pt1_1" class="">
+        <td class="passCase">
+            <div class="testcase">test_00001_get_server_configuration_of_different_env（获取被测试服务地址：不同的环境设置获取到的值不同）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt1_1' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+        <div id='div_pt1_1' class="collapse">
+                <pre>ENV: test
+http://192.168.0.201:8061
+http://192.168.0.201:8061/f1
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt1_2" class="">
+        <td class="passCase">
+            <div class="testcase">test_00002_get_user_configuration_of_different_env（获取测试账号：不同的环境设置获取到的值不同）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt1_2' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+        <div id='div_pt1_2' class="collapse">
+                <pre>ENV: test
+user: 15811139242, pwd: 123456
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr class="failClass warning">
+        <td>DemoProduct1.Feature1.f1_bbb_demo_data_test.Test</td>
+        <td class="text-center">2</td>
+        <td class="text-center">2</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center"><a href="javascript:showClassDetail('c2',2)" class="detail" id="c2">详细</a></td>
+    </tr>
+
+<tr id="pt2_1" class="">
+        <td class="passCase">
+            <div class="testcase">test_00001_get_data1（获取测试数据1）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt2_1' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+        <div id='div_pt2_1' class="collapse">
+                <pre>ENV: test
+index=1
+video_id=123456
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt2_2" class="">
+        <td class="passCase">
+            <div class="testcase">test_00002_get_data2（获取测试数据2）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt2_2' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+        <div id='div_pt2_2' class="collapse">
+                <pre>ENV: test
+name= lisi
+demo= false
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr class="failClass warning">
+        <td>DemoProduct1.Feature2.f2_ccc_demo_priority_tag_test.Test</td>
+        <td class="text-center">4</td>
+        <td class="text-center">4</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center"><a href="javascript:showClassDetail('c3',4)" class="detail" id="c3">详细</a></td>
+    </tr>
+
+<tr id="pt3_1" class="">
+        <td class="passCase">
+            <div class="testcase">test_00001_invalid_activate_code（激活码不正确：非法）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt3_1' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+        <div id='div_pt3_1' class="collapse">
+                <pre>xxxxxxxxx
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt3_2" class="">
+        <td class="passCase">
+            <div class="testcase">test_00003_dddd（）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt3_2' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+        <div id='div_pt3_2' class="collapse">
+                <pre>dddd
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt3_3" class="">
+        <td class="passCase">
+            <div class="testcase">test_00004_cccc（）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt3_3' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+        <div id='div_pt3_3' class="collapse">
+                <pre>cccc
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt3_4" class="">
+        <td class="passCase">
+            <div class="testcase">test_00005_aaaa（）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt3_4' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+        <div id='div_pt3_4' class="collapse">
+                <pre>aaaa
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr class="failClass warning">
+        <td>DemoProduct2.Feature3.f3_ddd_demo_skip_failure_error_test.Test</td>
+        <td class="text-center">4</td>
+        <td class="text-center">1</td>
+        <td class="text-center">1</td>
+        <td class="text-center">1</td>
+        <td class="text-center">1</td>
+        <td class="text-center"><a href="javascript:showClassDetail('c4',4)" class="detail" id="c4">详细</a></td>
+    </tr>
+
+<tr id="et4_1" class="">
+    <td class="errorCase"><div class="testcase">test_00001_1111（）</div></td>
+    <td colspan="6" align="center">
+    <!--默认收起错误信息
+    <button id='btn_et1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_et1_5'>错误</button>
+    <div id='div_et1_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -->
+    <button id="btn_et4_1" type="button" class="btn btn-danger btn-xs" data-toggle="collapse" data-target="#div_et4_1">错误</button>
+    <div id="div_et4_1" class="collapse in">
+        <pre>1111演示出错
+Traceback (most recent call last):
+  File "/Users/boweqiang/xxw/AutotestCornerstone/TestCase/DemoProduct2/Feature3/f3_ddd_demo_skip_failure_error_test.py", line 22, in test_1111
+    a = '3s' + 1
+TypeError: can only concatenate str (not "int") to str
+</pre>
+    </div>
+    </td>
+</tr>
+
+<tr id="ft4_2" class="">
+        <td class="failCase">
+            <div class="testcase">test_00002_2222（）</div>
+        </td>
+        <td colspan="6" align="center">
+            <!--默认收起错误信息
+            <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_2'>失败</button>
+            <div id='div_ft1_2' class="collapse">  -->
+
+            <!-- 默认展开错误信息 -->
+            <button id="btn_ft4_2" type="button" class="btn btn-warning btn-xs" data-toggle="collapse" data-target="#div_ft4_2">失败</button>
+            <div id="div_ft4_2" class="collapse in">
+                <pre>2222演示失败
+Traceback (most recent call last):
+  File "/Users/boweqiang/xxw/AutotestCornerstone/TestCase/DemoProduct2/Feature3/f3_ddd_demo_skip_failure_error_test.py", line 31, in test_2222
+    assert a == 2, '验证失败'
+AssertionError: 验证失败
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt4_3" class="">
+        <td class="passCase">
+            <div class="testcase">test_00003_3333（）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt4_3' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_3'>通过</button>
+        <div id='div_pt4_3' class="collapse">
+                <pre>3333正常通过
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt4_4" class="">
+        <td class="passCase">
+            <div class="testcase">test_00004_44444（）</div>
+        </td>
+        <td colspan="6" align="center">
+        <span class="label label-info success">跳过</span>
+        </td>
+    </tr>
+
+<tr class="failClass warning">
+        <td>DemoProduct2.Feature4.f4_eee_demo_common_test.Test</td>
+        <td class="text-center">2</td>
+        <td class="text-center">2</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center">0</td>
+        <td class="text-center"><a href="javascript:showClassDetail('c5',2)" class="detail" id="c5">详细</a></td>
+    </tr>
+
+<tr id="pt5_1" class="">
+        <td class="passCase">
+            <div class="testcase">test_00001_common_case（）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt5_1' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+        <div id='div_pt5_1' class="collapse">
+                <pre>这常规的测试用例1
+ENV: test
+step 1, 请求接口获取响应
+request: http://192.168.1.202:8000/f4
+step 2, 验证接口返回
+</pre>
+            </div>
+        </td>
+    </tr>
+
+<tr id="pt5_2" class="">
+        <td class="passCase">
+            <div class="testcase">test_00002_common_case_with_data（）</div>
+        </td>
+        <td colspan="6" align="center">
+       
+        <button id='btn_pt5_2' type="button"  class="btn btn-success btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_2'>通过</button>
+        <div id='div_pt5_2' class="collapse">
+                <pre>常规的测试用例2
+ENV: test
+step 1, 准备请求数据
+step 2, 请求接口获取响应
+request: http://192.168.1.202:8000/f4/login
+params: {'username': 'boweiqiang', 'password': '123456', 'wd': 'test'}
+200
+<!DOCTYPE html>
+<!--STATUS OK--><html> <head><meta http-equiv=content-type content=text/html;charset=utf-8><meta http-equiv=X-UA-Compatible content=IE=Edge><meta content=always name=referrer><link rel=stylesheet type=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css><title>ç¾åº¦ä¸ä¸ï¼ä½ å°±ç¥é</title></head> <body link=#0000cc> <div id=wrapper> <div id=head> <div class=head_wrapper> <div class=s_form> <div class=s_form_wrapper> <div id=lg> <img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129> </div> <form id=form name=f action=//www.baidu.com/s class=fm> <input type=hidden name=bdorz_come value=1> <input type=hidden name=ie value=utf-8> <input type=hidden name=f value=8> <input type=hidden name=rsv_bp value=1> <input type=hidden name=rsv_idx value=1> <input type=hidden name=tn value=baidu><span class="bg s_ipt_wr"><input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus></span><span class="bg s_btn_wr"><input type=submit id=su value=ç¾åº¦ä¸ä¸ class="bg s_btn"></span> </form> </div> </div> <div id=u1> <a href=http://news.baidu.com name=tj_trnews class=mnav>æ°é»</a> <a href=http://www.hao123.com name=tj_trhao123 class=mnav>hao123</a> <a href=http://map.baidu.com name=tj_trmap class=mnav>å°å¾</a> <a href=http://v.baidu.com name=tj_trvideo class=mnav>è§é¢</a> <a href=http://tieba.baidu.com name=tj_trtieba class=mnav>è´´å§</a> <noscript> <a href=http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb>ç»å½</a> </noscript> <script>document.write('<a href="http://www.baidu.com/bdorz/login.gif?login&tpl=mn&u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&")+ "bdorz_come=1")+ '" name="tj_login" class="lb">ç»å½</a>');</script> <a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;">æ´å¤äº§å</a> </div> </div> </div> <div id=ftCon> <div id=ftConw> <p id=lh> <a href=http://home.baidu.com>å³äºç¾åº¦</a> <a href=http://ir.baidu.com>About Baidu</a> </p> <p id=cp>&copy;2017&nbsp;Baidu&nbsp;<a href=http://www.baidu.com/duty/>ä½¿ç¨ç¾åº¦åå¿è¯»</a>&nbsp; <a href=http://jianyi.baidu.com/ class=cp-feedback>æè§åé¦</a>&nbsp;äº¬ICPè¯030173å·&nbsp; <img src=//www.baidu.com/img/gs.gif> </p> </div> </div> </div> </body> </html>
+
+step 3, 验证接口返回
+</pre>
+            </div>
+        </td>
+    </tr>
+
+
+    <tr id='total_row' class="text-center active">
+        <td>总计</td>
+        <td>14</td>
+        <td>11</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>通过率：78.57%</td>
+    </tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+<div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style="font-size:30px;" aria-hidden="true">
+    </span></a></div>
+
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<data>
+    <testclass name="Test">123
+        <testcase name="test_common_case_with_data">
+            <user>boweiqiang</user>
+            <pwd>123456</pwd>
+        </testcase>
+    </testclass>
+</data>

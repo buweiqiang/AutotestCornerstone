@@ -1,0 +1,11 @@
+certifi==2018.11.29
+chardet==3.0.4
+idna==2.8
+pycryptodome==3.7.3
+requests==2.21.0
+websocket-client==0.54.0
+rsa==4.0
+PyHive==0.6.1
+PyMySQL==0.9.3
+qiniu==7.2.4
+PyMySQL==0.9.3
