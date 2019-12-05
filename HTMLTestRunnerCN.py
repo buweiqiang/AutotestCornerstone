@@ -249,10 +249,12 @@ class HTMLTestRunner(object):
         self.verbosity = verbosity
         self.title = title
         self.description = description
-        self.startTime = datetime.datetime.now()
+        self.startTime = None
+        self.stopTime = None
 
     def run(self, test):
         "Run the given test case or test suite."
+        self.startTime = datetime.datetime.now()
         result = _TestResult(self.verbosity)
         test(result)
         self.stopTime = datetime.datetime.now()

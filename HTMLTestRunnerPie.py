@@ -243,11 +243,11 @@ class _TestResult(TestResult):
         self.time_cost = '{0} s'.format(round(time.time() - self.start_time, 2))
         self.result.append((0, test, output, '', self.time_cost))
         if self.verbosity > 1:
-            sys.stderr.write('P  ')
+            sys.stderr.write('ok  ')
             sys.stderr.write(str(test))
             sys.stderr.write('\n')
         else:
-            sys.stderr.write('P')
+            sys.stderr.write('ok')
 
     def addFailure(self, test, err):
         self.failure_count += 1
@@ -303,11 +303,11 @@ class _TestResult(TestResult):
         self.time_cost = '{0} s'.format(round(time.time() - self.start_time, 2))
         self.result.append((3, test, output, reason, self.time_cost))
         if self.verbosity > 1:
-            sys.stderr.write('K')
+            sys.stderr.write('S  ')
             sys.stderr.write(str(test))
             sys.stderr.write('\n')
         else:
-            sys.stderr.write('K')
+            sys.stderr.write('S')
 
 
 class HTMLTestRunner(object):
@@ -324,6 +324,8 @@ class HTMLTestRunner(object):
         self.run_times = 0
         self.title = title
         self.description = description
+        self.startTime = None
+        self.stopTime = None
 
     def run(self, test):
         "Run the given test case or test suite."

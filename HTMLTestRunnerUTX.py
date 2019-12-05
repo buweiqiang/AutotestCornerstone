@@ -30,11 +30,11 @@ class _TestResult(unittest.TestResult):
         self.error_count = 0
         self.verbosity = verbosity
         self.result = []
-        self._case_start_time = 0
-        self._case_run_time = 0
+        self.start_time = 0
+        self.time_cost = 0
 
     def startTest(self, test):
-        self._case_start_time = time.time()
+        self.start_time = time.time()
         super().startTest(test)
         self.raw_stdout = sys.stdout
         self.raw_stderr = sys.stderr
@@ -42,7 +42,7 @@ class _TestResult(unittest.TestResult):
         sys.stderr = self.outputBuffer
 
     def complete_output(self):
-        self._case_run_time = time.time() - self._case_start_time
+        self.time_cost = time.time() - self.start_time
         if self.raw_stdout:
             sys.stdout = self.raw_stdout
             sys.stderr = self.raw_stderr
@@ -59,14 +59,14 @@ class _TestResult(unittest.TestResult):
         self.success_count += 1
         super().addSuccess(test)
         output = self.complete_output()
-        self.result.append((0, test, output, '', self._case_run_time))
+        self.result.append((0, test, output, '', self.time_cost))
 
     def addError(self, test, err):
         self.error_count += 1
         super().addError(test, err)
         _, _exc_str = self.errors[-1]
         output = self.complete_output()
-        self.result.append((2, test, output, _exc_str, self._case_run_time))
+        self.result.append((2, test, output, _exc_str, self.time_cost))
 
     def addSkip(self, test, reason):
         self.skip_count += 1
@@ -78,7 +78,7 @@ class _TestResult(unittest.TestResult):
         super().addFailure(test, err)
         _, _exc_str = self.failures[-1]
         output = self.complete_output()
-        self.result.append((1, test, output, _exc_str, self._case_run_time))
+        self.result.append((1, test, output, _exc_str, self.time_cost))
 
 
 class HTMLTestRunner3(object):
@@ -87,13 +87,14 @@ class HTMLTestRunner3(object):
         self.verbosity = verbosity
         self.title = title
         self.description = description
-        self.start_time = datetime.datetime.now()
-        self.stop_time = None
+        self.startTime = None
+        self.stopTime = None
 
     def run(self, test):
+        self.startTime = datetime.datetime.now()
         result = _TestResult(self.verbosity)
         test(result)
-        self.stop_time = datetime.datetime.now()
+        self.stopTime = datetime.datetime.now()
         self.analyze_test_result(result)
         # log.info('Time Elapsed: {}'.format(self.stop_time - self.start_time))
 
@@ -116,8 +117,8 @@ class HTMLTestRunner3(object):
 
     def analyze_test_result(self, result):
         result_data["reportName"] = self.title
-        result_data["beginTime"] = str(self.start_time)[:19]
-        result_data["totalTime"] = str(self.stop_time - self.start_time)
+        result_data["beginTime"] = str(self.startTime)[:19]
+        result_data["totalTime"] = str(self.stopTime - self.startTime)
 
         sorted_result = self.sort_result(result.result)
         for cid, (cls, cls_results) in enumerate(sorted_result):
@@ -165,9 +166,10 @@ class HTMLTestRunner3(object):
 
 class HTMLTestRunner4(HTMLTestRunner3):
     def run(self, test):
+        self.startTime = datetime.datetime.now()
         result = _TestResult(self.verbosity)
         test(result)
-        self.stop_time = datetime.datetime.now()
+        self.stopTime = datetime.datetime.now()
         self.analyze_test_result(result)
         # log.info('Time Elapsed: {}'.format(self.stop_time - self.start_time))
 

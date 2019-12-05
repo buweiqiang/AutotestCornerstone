@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 __author__ = "Weiqiang Bu"
-__version__ = "1.4"
+__version__ = "1.5"
 
 """
+Version 1.5
+* 支持--title参数，自定义测试报告的title
+* 优化钉钉消息内容
+
 Version 1.4
 * 支持--index参数，在运行时对测试用例按照书写顺序进行编号（例如test_00001_case_name）
 
@@ -55,6 +59,7 @@ if __name__ == '__main__':
                         help='choice html report style')
     parser.add_argument('--index', action='store_true', default=False,
                         help='append index to test case name by its written order in file')
+    parser.add_argument('--title', help='the title of the report')
 
     args = parser.parse_args()
 
@@ -111,8 +116,9 @@ if __name__ == '__main__':
     # run tests and generate report
     print('report output: %s' % output_file)
 
-    # 定义测试报告的title：以时间+文件名做为title
-    report_title = f"{time.strftime('%Y-%m-%d %H:%M:%S')} {output_name}"
+    # 如果未传入title参数，则以输出文件名做为title
+    # report_title = f"{time.strftime('%Y-%m-%d %H:%M:%S')} {output_name}"
+    report_title = args.title if args.title else output_name
     print('report title: {}'.format(report_title))
 
     # 定义测试报告的描述部分：如果传入了测试报告的查看链接，则在报告描述中插入此链接
@@ -158,8 +164,9 @@ if __name__ == '__main__':
 
         # 发送钉钉通知测试结果
         if args.ding and send_notice:
+            msg = '测试报告：{}\n执行时间：{} ~ {}\n测试结果：{}\n{}'.format(report_title, runner.startTime, runner.stopTime,
+                                                              result_summary, description)
             ding_to = args.ding.split(',')
-            msg = '{}\n测试结果：{}\n{}'.format(report_title, result_summary, description)
             for token in ding_to:
                 ding_robot.send_message(token, msg)
 
