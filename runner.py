@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = "Weiqiang Bu"
-__version__ = "1.0"
+__version__ = "1.4"
 
 """
 Version 1.4

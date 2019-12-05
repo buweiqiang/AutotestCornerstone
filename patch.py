@@ -18,7 +18,20 @@ data_file_ext = ['ini', 'data', 'cfg', 'json', 'xml']
 
 
 class dataobject:
-    # 数据模板：{"testclass": {"xxx_class": {"testcase": {"xxx_case": {"key": "value", "key2": "value2"}}}}}
+    '''
+    # 数据模板：
+    {
+        "xxx_class":
+            {
+                "xxx_case":
+                    {
+                        "key1": "value1",
+                        "key2": "value2"
+                    }
+            }
+    }
+    '''
+
     def __init__(self, file_name, data_type=TestDataType.ini):
         if not file_name:
             raise ValueError("file_name can't be null or empty")
