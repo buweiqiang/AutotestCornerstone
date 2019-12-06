@@ -153,6 +153,9 @@ if __name__ == '__main__':
             print(result_summary)
             # 判断本次执行是否失败，如果失败则最终抛出异常，以便jenkins能识别为任务执行失败
             fail_flag = result.failure_count > 0 or result.error_count > 0
+        duration_total = (runner.stopTime - runner.startTime).total_seconds()
+        start_time_str = runner.startTime.strftime('%Y-%m-%d %H:%M:%S')
+        stop_time_str = runner.stopTime.strftime('%Y-%m-%d %H:%M:%S')
 
         # 根据入参确定是否要发送测试结果
         send_notice = args.nm == 2 or fail_flag
@@ -164,8 +167,8 @@ if __name__ == '__main__':
 
         # 发送钉钉通知测试结果
         if args.ding and send_notice:
-            msg = '测试报告：{}\n执行时间：{} ~ {}\n测试结果：{}\n{}'.format(report_title, runner.startTime, runner.stopTime,
-                                                              result_summary, description)
+            time_msg = f'{duration_total}s ({start_time_str} ~ {stop_time_str})'
+            msg = '测试报告：{}\n执行时间：{}\n测试结果：{}\n{}'.format(report_title, time_msg, result_summary, description)
             ding_to = args.ding.split(',')
             for token in ding_to:
                 ding_robot.send_message(token, msg)
