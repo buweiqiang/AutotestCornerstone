@@ -28,12 +28,13 @@ else:
     import configparser
 
 
-def getConfigFiles(product_type, env):
+def getConfigFiles(product_name, env, has_product_dir=False):
     '''
     根据产品类型获取相关的配置文件
-    :param product_type: 
+    :param product_name: 产品名称，不同的产品的配置放在以与产品名称相同的配置文件中，例如：product_name.cfg
     :param env: 指定要获取哪个环境的配置文件
-    :return: 文件列表如：[global.cfg, product.global.cfig, product.env.cfg]
+    :param has_product_dir: 是否将不同产品的配置文件，放到以产品名称命名的不同的文件夹中，默认为False
+   :return: 文件列表如：[global.cfg, product.global.cfig, product.env.cfg]
     '''
     configfiles = []
     # 加载全局配置文件,一定存在
@@ -41,20 +42,24 @@ def getConfigFiles(product_type, env):
     configfiles.append(_global_file)
 
     # 加载指定产品组(config_type)的全局配置文件, 可能不存在
-    _product_global_file = os.path.join(CONF_DIR, '{}.global.cfg'.format(product_type))
+    _product_global_file = os.path.join(CONF_DIR, '{}.global.cfg'.format(product_name))
     if os.path.exists(_product_global_file):
         configfiles.append(_product_global_file)
+
+    product_config_dir = ""
+    if has_product_dir:
+        product_config_dir = product_name
 
     # 加载指定env的配置文件config_type.env.cfg
     _product_config_file = None
     if env:
-        _product_config_file = os.path.join(CONF_DIR, product_type, '{}.{}.cfg'.format(product_type, env))
+        _product_config_file = os.path.join(CONF_DIR, product_config_dir, '{}.{}.cfg'.format(product_name, env))
         if not os.path.exists(_product_config_file):
             print('%s not found, will use the default one' % _product_config_file)
             _product_config_file = None
     # 如不存在, 默认为config_type.cfg
     if not _product_config_file:
-        _product_config_file = os.path.join(CONF_DIR, product_type, '{}.cfg'.format(product_type))
+        _product_config_file = os.path.join(CONF_DIR, product_config_dir, '{}.cfg'.format(product_name))
     configfiles.append(_product_config_file)
 
     return configfiles

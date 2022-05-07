@@ -1,13 +1,10 @@
 #!/usr/bin/env python
-# -*- encoding: utf-8 -*-
-'''
-@File : __init__.py.py
-@Contact : buweiqiang@civaonline.cn
-@MTime : 2019-09-16 17:27
-@Author: buweiqiang
-@Version: 1.0
-@Desciption: None
-'''
+# -*- coding: utf-8 -*-
+# @Time    : 2022/5/7 14:46
+# @Author  : mogui@tsign.cn
+# @File    : DemoProduct2.py
+# @Version : 1.0
+# @Software: AutotestCornerstone
 
 from conf.config import Config
 
@@ -66,3 +63,4 @@ class Product2Config(Config):
 
 
 p2_cfg = Product2Config()
+
